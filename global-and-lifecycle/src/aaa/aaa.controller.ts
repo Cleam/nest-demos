@@ -1,11 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  OnModuleInit,
+  OnApplicationBootstrap,
+  OnModuleDestroy,
+  OnApplicationShutdown,
+  BeforeApplicationShutdown,
+} from '@nestjs/common';
 import { AaaService } from './aaa.service';
 import { CreateAaaDto } from './dto/create-aaa.dto';
 import { UpdateAaaDto } from './dto/update-aaa.dto';
 
 @Controller('aaa')
-export class AaaController {
+export class AaaController
+  implements
+    OnModuleInit,
+    OnModuleDestroy,
+    OnApplicationBootstrap,
+    OnApplicationShutdown,
+    BeforeApplicationShutdown
+{
   constructor(private readonly aaaService: AaaService) {}
+  onModuleInit() {
+    console.log(`AaaController: onModuleInit`);
+  }
+  onApplicationBootstrap() {
+    console.log(`AaaController: onApplicationBootstrap`);
+  }
+  onModuleDestroy() {
+    console.log('AaaController: onModuleDestroy.');
+  }
+  beforeApplicationShutdown(signal?: string) {
+    console.log('AaaController: beforeApplicationShutdown.', signal);
+  }
+  onApplicationShutdown(signal?: string) {
+    console.log('AaaController: onApplicationShutdown.', signal);
+  }
 
   @Post()
   create(@Body() createAaaDto: CreateAaaDto) {

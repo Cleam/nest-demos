@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { Aaa } from './aaa.decorator';
 import { AaaGuard } from './aaa.guard';
 import { Bbb } from './bbb.decorator';
+import { MyHeaders } from './my-headers.decorator';
 
 @Controller()
 export class AppController {
@@ -25,5 +26,10 @@ export class AppController {
   @Bbb('h3', 'admin', 'admin2')
   getHello3(): string {
     return this.appService.getHello();
+  }
+
+  @Get('h4')
+  getHello4(@MyHeaders() c): string {
+    return c;
   }
 }
